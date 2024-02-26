@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>My Census Data Dashboard | TimeLine-Observable</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.js";
+
+define({id: "a0e941c1", inputs: ["FileAttachment"], outputs: ["data","displayTable"], files: [{"name":"./US-AK-census-naics4-2020.csv","mimeType":"text/csv","path":"./_file/US-AK-census-naics4-2020.csv"}], body: async (FileAttachment) => {
+const data = await FileAttachment("US-AK-census-naics4-2020.csv").csv();
+function displayTable(data) {
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+
+  // Extract header names from the first row
+  const headerRow = data[0];
+  for (const key in headerRow) {
+    const th = document.createElement("th");
+    th.textContent = key;
+    thead.appendChild(th);
+  }
+
+  // Create table rows and fill with data
+  for (const row of data) {
+    const tr = document.createElement("tr");
+    for (const key in row) {
+      const td = document.createElement("td");
+      td.textContent = row[key];
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+
+  // Append table to an existing element (e.g., a DOM container)
+  const container = document.getElementById("my-table-container"); // Replace with your container ID
+  container.appendChild(table);
+  table.appendChild(thead);
+  table.appendChild(tbody);
+}
+
+// Display the table
+displayTable(data);
+return {data,displayTable};
+}});
+
+</script>
+<aside id="observablehq-toc" data-selector="#observablehq-main h1:not(:first-of-type), #observablehq-main h2:not(h1 + h2):has(a.observablehq-header-anchor)">
+<nav>
+</nav>
+</aside>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="my-census-data-dashboard" tabindex="-1"><a class="observablehq-header-anchor" href="#my-census-data-dashboard">My Census Data Dashboard</a></h1>
+<div id="my-table-container"></div>
+<div id="cell-a0e941c1" class="observablehq observablehq--block"></div>
+</main>
+<footer id="observablehq-footer">
+<div>Built with <a href="https://observablehq.com/" target="_blank">Observable</a> on <a title="2024-02-22T02:36:17">Feb 22, 2024</a>.</div>
+</footer>
+</div>
